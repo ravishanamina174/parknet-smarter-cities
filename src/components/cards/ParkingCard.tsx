@@ -25,9 +25,12 @@ export function ParkingCard({ center }: { center: ParkingCenter }) {
           <div className="aspect-[16/9] w-full overflow-hidden">
             <img
               src={center.image}
-              alt={`${center.name} parking center`}
+              alt={`${center.name} parking center image`}
               loading="lazy"
               className="h-full w-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/placeholder.svg";
+              }}
             />
           </div>
           <CardHeader className="pb-2">

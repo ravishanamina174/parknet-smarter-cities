@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import hero from "@/assets/park-hero.jpg";
 import { motion } from "framer-motion";
+import { Activity, Leaf, ShieldCheck, Search as SearchIcon, CalendarCheck2, Car } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
         <meta name="description" content="Real-time smart parking solution for sustainable cities. Find, reserve, and manage parking with live status updates." />
         <link rel="canonical" href="/" />
       </Helmet>
+
 
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -37,12 +39,13 @@ const Index = () => {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="hover-scale">
                 <Link to="/signup">Get Started</Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="hover-scale">
                 <Link to="/login">Login</Link>
               </Button>
+
             </div>
           </motion.div>
 
@@ -65,6 +68,58 @@ const Index = () => {
               <div className="mt-1 text-2xl font-semibold">Reliable bookings</div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="container">
+          <h2 className="text-xl font-semibold text-center">How It Works</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <motion.article
+              className="rounded-xl border bg-card p-6 text-center hover-scale"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border">
+                <SearchIcon className="h-5 w-5" />
+              </div>
+              <div className="mt-3 text-sm text-muted-foreground">Step 1</div>
+              <div className="text-lg font-semibold">Find</div>
+              <p className="mt-1 text-sm text-muted-foreground">Search nearby parking centers with live availability.</p>
+            </motion.article>
+
+            <motion.article
+              className="rounded-xl border bg-card p-6 text-center hover-scale"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border">
+                <CalendarCheck2 className="h-5 w-5" />
+              </div>
+              <div className="mt-3 text-sm text-muted-foreground">Step 2</div>
+              <div className="text-lg font-semibold">Reserve</div>
+              <p className="mt-1 text-sm text-muted-foreground">Pick a slot and confirm your reservation in seconds.</p>
+            </motion.article>
+
+            <motion.article
+              className="rounded-xl border bg-card p-6 text-center hover-scale"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border">
+                <Car className="h-5 w-5" />
+              </div>
+              <div className="mt-3 text-sm text-muted-foreground">Step 3</div>
+              <div className="text-lg font-semibold">Park</div>
+              <p className="mt-1 text-sm text-muted-foreground">Navigate to your spot and enjoy a seamless experience.</p>
+            </motion.article>
+          </div>
         </div>
       </section>
     </div>

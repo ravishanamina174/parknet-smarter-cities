@@ -1,12 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import StatusDot from "@/components/StatusDot";
+import StatusDot, { SlotStatus } from "@/components/StatusDot";
 import { MapPin } from "lucide-react";
 
 export default function SpotDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   // Placeholder content; will be driven by Supabase later
   const center = {
@@ -19,11 +21,40 @@ export default function SpotDetails() {
     counts: { free: 18, reserved: 6, occupied: 24 },
   };
 
+  const slots = useMemo(() => {
+    const statuses: SlotStatus[] = ["free", "reserved", "occupied"];
+    const seed = (id?.charCodeAt(0) || 1) + (id?.length || 0);
+    return Array.from({ length: 12 }, (_, i) => {
+      const status = statuses[(seed + i) % statuses.length];
+      return { number: i + 1, status } as { number: number; status: SlotStatus };
+    });
+  }, [id]);
+
+  const styleFor = (status: SlotStatus): React.CSSProperties => {
+    const colorVar = `var(--status-${status})`;
+    return {
+      background: `hsl(${colorVar} / 0.12)`,
+      borderColor: `hsl(${colorVar} / 0.45)`,
+    } as React.CSSProperties;
+  };
+
+  const onSelectSlot = (slot: { number: number; status: SlotStatus }) => {
+    navigate("/reservations", {
+      state: {
+        centerId: center.id,
+        centerName: center.name,
+        slotNumber: slot.number,
+        status: slot.status,
+        timerSeconds: 60 * 60,
+      },
+    });
+  };
+
   return (
     <div className="container py-8">
       <Helmet>
         <title>{center.name} | ParkNet</title>
-        <meta name="description" content="Parking spot details with live status and reservation options." />
+        <meta name="description" content="Parking spot details with visual slot grid and reservation options." />
         <link rel="canonical" href={`/spots/${id}`} />
       </Helmet>
 
@@ -58,6 +89,30 @@ export default function SpotDetails() {
               </CardContent>
             </Card>
           </div>
+
+          <section className="mt-6" aria-label="Available slots">
+            <h2 className="text-lg font-semibold">Select a Slot</h2>
+            <div className="mt-3 grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {slots.map((slot) => (
+                <button
+                  key={slot.number}
+                  type="button"
+                  onClick={() => onSelectSlot(slot)}
+                  style={styleFor(slot.status)}
+                  className="rounded-lg border p-3 text-center transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
+                  aria-label={`Slot ${slot.number} - ${slot.status}`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <StatusDot status={slot.status} />
+                    <span className="text-xs capitalize text-muted-foreground">{slot.status}</span>
+                  </div>
+                  <div className="mt-1 text-xl font-semibold">#{slot.number}</div>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-4 text-sm text-muted-foreground">Tap a slot to proceed to reservation.</div>
+          </section>
 
           <div className="mt-6 flex gap-3">
             <Button>Reserve a Slot</Button>

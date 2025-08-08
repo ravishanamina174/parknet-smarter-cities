@@ -30,6 +30,30 @@ const sample: ParkingCenter[] = [
     image: "https://images.unsplash.com/photo-1534234752346-cf16a3fa23e3?q=80&w=1600&auto=format&fit=crop",
     counts: { free: 22, reserved: 4, occupied: 17 },
   },
+  {
+    id: "4",
+    name: "City Center Garage",
+    address: "320 Elm St",
+    rating: 4.7,
+    image: "https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1600&auto=format&fit=crop",
+    counts: { free: 8, reserved: 10, occupied: 36 },
+  },
+  {
+    id: "5",
+    name: "Harbor View Parking",
+    address: "5 Pier Blvd",
+    rating: 4.5,
+    image: "https://images.unsplash.com/photo-1467274142041-3d31f29165b9?q=80&w=1600&auto=format&fit=crop",
+    counts: { free: 15, reserved: 8, occupied: 20 },
+  },
+  {
+    id: "6",
+    name: "Sunset Mall Car Park",
+    address: "101 Sunset Ave",
+    rating: 4.3,
+    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1600&auto=format&fit=crop",
+    counts: { free: 12, reserved: 6, occupied: 28 },
+  },
 ];
 
 export default function Dashboard() {
