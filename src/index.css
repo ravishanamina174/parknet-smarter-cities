@@ -8,51 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Base canvas */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
+    /* Surfaces */
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Brand & accents */
+    --primary: 203 76% 35%;          /* brand blue */
     --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
+    --secondary: 172 39% 48%;        /* teal/green accent */
     --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
+    /* Status colors */
+    --status-free: 152 61% 45%;      /* green */
+    --status-reserved: 45 92% 51%;   /* yellow */
+    --status-occupied: 0 84% 60%;    /* red */
+
+    /* Feedback */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
+    /* Layout tokens */
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 203 76% 35%;
+    --radius: 0.75rem;
 
-    --radius: 0.5rem;
-
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    --sidebar-primary: 203 76% 35%;
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Decorative */
+    --gradient-primary: linear-gradient(135deg, hsl(203 76% 35%), hsl(172 39% 48%));
+    --shadow-elevate: 0 10px 30px -10px hsl(203 76% 35% / 0.25);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
