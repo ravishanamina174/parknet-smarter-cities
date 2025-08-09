@@ -1,10 +1,50 @@
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Clock, Building2 } from "lucide-react";
+import { MapPin, Phone, Clock, Building2, CheckCircle, Send } from "lucide-react";
+
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
 
 export default function Contact() {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({ name: "", email: "", message: "" });
+    }, 3000);
+  };
+
   return (
     <div className="container py-8">
       <Helmet>
@@ -30,13 +70,88 @@ export default function Contact() {
         </div>
       </section>
 
-
-      <form className="mt-6 max-w-xl space-y-4">
-        <Input placeholder="Your name" />
-        <Input placeholder="Email address" type="email" />
-        <Textarea placeholder="Message" className="min-h-[140px]" />
-        <Button type="submit">Send Message</Button>
-      </form>
+      {isSubmitted ? (
+        <motion.div 
+          className="mt-6 max-w-xl"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="rounded-2xl border bg-gradient-to-br from-green-50 to-emerald-50 p-8 text-center shadow-lg">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            >
+              <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
+            </motion.div>
+            <motion.h3 
+              className="text-2xl font-bold text-green-800 mb-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Message Sent Successfully!
+            </motion.h3>
+            <motion.p 
+              className="text-green-700 text-lg"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              Thank you for reaching out to us. We've received your message and will get back to you within 24 hours.
+            </motion.p>
+            <motion.div 
+              className="mt-6 text-sm text-green-600"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              Your message has been saved and our team will review it shortly.
+            </motion.div>
+          </div>
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubmit} className="mt-6 max-w-xl space-y-4">
+          <Input 
+            placeholder="Your name" 
+            value={formData.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+            required
+          />
+          <Input 
+            placeholder="Email address" 
+            type="email" 
+            value={formData.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            required
+          />
+          <Textarea 
+            placeholder="Message" 
+            className="min-h-[140px]" 
+            value={formData.message}
+            onChange={(e) => handleInputChange("message", e.target.value)}
+            required
+          />
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="flex items-center gap-2"
+          >
+            {isSubmitting ? (
+              <>
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4" />
+                Send Message
+              </>
+            )}
+          </Button>
+        </form>
+      )}
     </div>
   );
 }

@@ -1,73 +1,124 @@
-# Welcome to your Lovable project
+# ParkNet - Smart Parking Solution
 
-## Project info
+A modern React application for smart parking management with real-time status updates and reservation system.
 
-**URL**: https://lovable.dev/projects/7402d8f9-7c8b-42f3-8e45-8023e5d8c6f4
+## Features
 
-## How can I edit this code?
+- 🔐 **Clerk Authentication** - Secure authentication with Gmail OAuth support
+- 🎨 **Modern UI** - Built with Shadcn/ui components and Tailwind CSS
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile
+- 🚗 **Smart Parking** - Real-time parking spot management
+- 📊 **Dashboard** - User-friendly analytics and monitoring
+- 🔒 **Protected Routes** - Secure access to user-specific features
 
-There are several ways of editing your application.
+## Authentication
 
-**Use Lovable**
+This application uses [Clerk](https://clerk.com/) for authentication with the following features:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7402d8f9-7c8b-42f3-8e45-8023e5d8c6f4) and start prompting.
+- **Gmail OAuth** - Sign in with Google account
+- **Email/Password** - Traditional authentication
+- **Protected Routes** - Secure access to dashboard, reservations, and settings
+- **User Management** - Profile management and logout functionality
 
-Changes made via Lovable will be committed automatically to this repo.
+## Environment Setup
 
-**Use your preferred IDE**
+Create a `.env` file in the root directory with your Clerk publishable key:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```env
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
 ```
 
-**Edit a file directly in GitHub**
+## Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-**Use GitHub Codespaces**
+2. **Set up environment variables:**
+   - Create a `.env` file with your Clerk publishable key
+   - Get your key from the [Clerk Dashboard](https://dashboard.clerk.com/)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-## What technologies are used for this project?
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-This project is built with:
+## Authentication Flow
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. **Home Page** - Users can click "Get Started Free" or "Login" buttons
+2. **Sign Up** - New users can create accounts with Gmail OAuth or email/password
+3. **Sign In** - Existing users can authenticate with their credentials
+4. **Protected Pages** - Dashboard, Reservations, Settings, and Admin require authentication
+5. **User Menu** - Authenticated users see their profile in the top navigation
 
-## How can I deploy this project?
+## Key Components
 
-Simply open [Lovable](https://lovable.dev/projects/7402d8f9-7c8b-42f3-8e45-8023e5d8c6f4) and click on Share -> Publish.
+- **ClerkProvider** - Wraps the entire app for authentication context
+- **ProtectedRoute** - Component to secure pages requiring authentication
+- **TopNav** - Navigation with authentication status and user menu
+- **Login/Signup Pages** - Clerk authentication components with custom styling
 
-## Can I connect a custom domain to my Lovable project?
+## Tech Stack
 
-Yes, you can!
+- **React 18** - Modern React with hooks
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first CSS framework
+- **Shadcn/ui** - Beautiful, accessible components
+- **Clerk** - Authentication and user management
+- **React Router** - Client-side routing
+- **Framer Motion** - Smooth animations
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Project Structure
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
+src/
+├── components/
+│   ├── layout/
+│   │   └── TopNav.tsx          # Navigation with auth
+│   ├── ui/                      # Shadcn/ui components
+│   └── ProtectedRoute.tsx       # Auth protection component
+├── pages/
+│   ├── Index.tsx               # Home page with auth buttons
+│   ├── Login.tsx               # Clerk SignIn component
+│   ├── Signup.tsx              # Clerk SignUp component
+│   ├── Settings.tsx            # User settings with auth
+│   └── ...                     # Other pages
+└── App.tsx                     # Main app with ClerkProvider
+```
+
+## Authentication Features
+
+- ✅ Gmail OAuth integration
+- ✅ Email/password authentication
+- ✅ Protected routes for sensitive pages
+- ✅ User profile management
+- ✅ Secure logout functionality
+- ✅ Responsive authentication UI
+- ✅ Loading states and error handling
+
+## Development
+
+The application is set up with:
+
+- **ESLint** - Code linting
+- **TypeScript** - Type checking
+- **Prettier** - Code formatting
+- **Tailwind CSS** - Styling
+- **Vite** - Fast development server
+
+## Deployment
+
+1. Build the application: `npm run build`
+2. Deploy the `dist` folder to your hosting provider
+3. Ensure your Clerk domain is configured for production
+
+## Support
+
+For authentication issues, check the [Clerk Documentation](https://clerk.com/docs).

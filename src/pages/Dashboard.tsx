@@ -19,7 +19,7 @@ const sample: ParkingCenter[] = [
     name: "Greenway Garage",
     address: "88 Riverside Ave",
     rating: 4.4,
-    image: "https://images.unsplash.com/photo-1477967318803-5f0fddf3f55f?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1600&auto=format&fit=crop",
     counts: { free: 10, reserved: 12, occupied: 30 },
   },
   {
@@ -27,7 +27,7 @@ const sample: ParkingCenter[] = [
     name: "Market Street Lot",
     address: "240 Market St",
     rating: 4.2,
-    image: "https://images.unsplash.com/photo-1534234752346-cf16a3fa23e3?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1600&auto=format&fit=crop",
     counts: { free: 22, reserved: 4, occupied: 17 },
   },
   {
@@ -43,7 +43,7 @@ const sample: ParkingCenter[] = [
     name: "Harbor View Parking",
     address: "5 Pier Blvd",
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1467274142041-3d31f29165b9?q=80&w=1600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop",
     counts: { free: 15, reserved: 8, occupied: 20 },
   },
   {

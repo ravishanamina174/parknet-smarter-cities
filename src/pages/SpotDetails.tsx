@@ -39,13 +39,18 @@ export default function SpotDetails() {
   };
 
   const onSelectSlot = (slot: { number: number; status: SlotStatus }) => {
+    // Only allow clicking on free slots
+    if (slot.status !== "free") {
+      return;
+    }
+    
     navigate("/reservations", {
       state: {
         centerId: center.id,
         centerName: center.name,
         slotNumber: slot.number,
         status: slot.status,
-        timerSeconds: 60 * 60,
+        timerSeconds: 0, // Start timer at 0
       },
     });
   };
@@ -93,25 +98,40 @@ export default function SpotDetails() {
           <section className="mt-6" aria-label="Available slots">
             <h2 className="text-lg font-semibold">Select a Slot</h2>
             <div className="mt-3 grid grid-cols-3 sm:grid-cols-4 gap-3">
-              {slots.map((slot) => (
-                <button
-                  key={slot.number}
-                  type="button"
-                  onClick={() => onSelectSlot(slot)}
-                  style={styleFor(slot.status)}
-                  className="rounded-lg border p-3 text-center transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
-                  aria-label={`Slot ${slot.number} - ${slot.status}`}
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <StatusDot status={slot.status} />
-                    <span className="text-xs capitalize text-muted-foreground">{slot.status}</span>
-                  </div>
-                  <div className="mt-1 text-xl font-semibold">#{slot.number}</div>
-                </button>
-              ))}
+              {slots.map((slot) => {
+                const isClickable = slot.status === "free";
+                return (
+                  <button
+                    key={slot.number}
+                    type="button"
+                    onClick={() => onSelectSlot(slot)}
+                    style={styleFor(slot.status)}
+                    className={`rounded-lg border p-3 text-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
+                      isClickable 
+                        ? "hover:opacity-90 cursor-pointer" 
+                        : "opacity-50 cursor-not-allowed"
+                    }`}
+                    aria-label={`Slot ${slot.number} - ${slot.status}`}
+                    disabled={!isClickable}
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <StatusDot status={slot.status} />
+                      <span className="text-xs capitalize text-muted-foreground">{slot.status}</span>
+                    </div>
+                    <div className="mt-1 text-xl font-semibold">#{slot.number}</div>
+                    {!isClickable && (
+                      <div className="mt-1 text-xs text-muted-foreground">
+                        {slot.status === "reserved" ? "Reserved" : "Occupied"}
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="mt-4 text-sm text-muted-foreground">Tap a slot to proceed to reservation.</div>
+            <div className="mt-4 text-sm text-muted-foreground">
+              Only green (free) slots can be selected for reservation.
+            </div>
           </section>
 
           <div className="mt-6 flex gap-3">
