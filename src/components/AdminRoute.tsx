@@ -8,6 +8,8 @@ interface AdminRouteProps {
   redirectTo?: string;
 }
 
+
+
 export default function AdminRoute({ children, redirectTo = "/dashboard" }: AdminRouteProps) {
   const { user, isLoaded } = useUser();
 
