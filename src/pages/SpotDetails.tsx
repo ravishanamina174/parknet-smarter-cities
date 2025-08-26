@@ -7,6 +7,9 @@ import StatusDot, { SlotStatus } from "@/components/StatusDot";
 import { MapPin } from "lucide-react";
 import { getParkingCenterById } from "@/lib/parkingData";
 
+
+
+
 export default function SpotDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
