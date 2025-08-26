@@ -3,19 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import StatusDot, { SlotStatus } from "@/components/StatusDot";
 import { MapPin, Star } from "lucide-react";
 import { motion } from "framer-motion";
-
-export interface ParkingCenter {
-  id: string;
-  name: string;
-  address: string;
-  rating: number;
-  image: string;
-  counts: {
-    free: number;
-    reserved: number;
-    occupied: number;
-  };
-}
+import { type ParkingCenter } from "@/lib/parkingData";
 
 export function ParkingCard({ center }: { center: ParkingCenter }) {
   return (

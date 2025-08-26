@@ -328,7 +328,7 @@ const Index = () => {
                   whileHover={{ x: 5 }}
                 >
                   <MapPin className="h-4 w-4 text-blue-400" />
-                  <span>123 Smart City Ave, Tech District</span>
+                  <span> No. 25, Smart Street, Colombo 01</span>
                 </motion.div>
               </div>
             </div>

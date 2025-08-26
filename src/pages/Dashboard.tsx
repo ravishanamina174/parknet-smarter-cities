@@ -3,58 +3,10 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Locate } from "lucide-react";
-import ParkingCard, { ParkingCenter } from "@/components/cards/ParkingCard";
+import ParkingCard from "@/components/cards/ParkingCard";
+import { parkingCenters, type ParkingCenter } from "@/lib/parkingData";
 
-const sample: ParkingCenter[] = [
-  {
-    id: "1",
-    name: "Central Plaza Parking",
-    address: "12 Main St, Downtown",
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 18, reserved: 6, occupied: 24 },
-  },
-  {
-    id: "2",
-    name: "Greenway Garage",
-    address: "88 Riverside Ave",
-    rating: 4.4,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 10, reserved: 12, occupied: 30 },
-  },
-  {
-    id: "3",
-    name: "Market Street Lot",
-    address: "240 Market St",
-    rating: 4.2,
-    image: "https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 22, reserved: 4, occupied: 17 },
-  },
-  {
-    id: "4",
-    name: "City Center Garage",
-    address: "320 Elm St",
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 8, reserved: 10, occupied: 36 },
-  },
-  {
-    id: "5",
-    name: "Harbor View Parking",
-    address: "5 Pier Blvd",
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 15, reserved: 8, occupied: 20 },
-  },
-  {
-    id: "6",
-    name: "Sunset Mall Car Park",
-    address: "101 Sunset Ave",
-    rating: 4.3,
-    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 12, reserved: 6, occupied: 28 },
-  },
-];
+const sample: ParkingCenter[] = parkingCenters;
 
 export default function Dashboard() {
   const [query, setQuery] = useState("");

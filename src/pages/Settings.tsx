@@ -169,7 +169,7 @@ export default function Settings() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="slot-capacity">Parking Slot Capacity</Label>
-              <Select defaultValue="100">
+              <Select defaultValue="50">
                 <SelectTrigger>
                   <SelectValue placeholder="Select capacity" />
                 </SelectTrigger>

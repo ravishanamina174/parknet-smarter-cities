@@ -5,21 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import StatusDot, { SlotStatus } from "@/components/StatusDot";
 import { MapPin } from "lucide-react";
+import { getParkingCenterById } from "@/lib/parkingData";
 
 export default function SpotDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Placeholder content; will be driven by Supabase later
-  const center = {
-    id,
-    name: "Central Plaza Parking",
-    address: "12 Main St, Downtown",
-    rating: 4.6,
-    image:
-      "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?q=80&w=1600&auto=format&fit=crop",
-    counts: { free: 18, reserved: 6, occupied: 24 },
-  };
+  // Get the actual parking center data based on the ID
+  const center = getParkingCenterById(id || "");
+  
+  // If center not found, show error or redirect
+  if (!center) {
+    return (
+      <div className="container py-8">
+        <h1 className="text-2xl font-bold text-red-600">Parking center not found</h1>
+        <p className="mt-2 text-muted-foreground">The parking center you're looking for doesn't exist.</p>
+      </div>
+    );
+  }
 
   const slots = useMemo(() => {
     const statuses: SlotStatus[] = ["free", "reserved", "occupied"];
@@ -48,6 +51,7 @@ export default function SpotDetails() {
       state: {
         centerId: center.id,
         centerName: center.name,
+        centerAddress: center.address,
         slotNumber: slot.number,
         status: slot.status,
         timerSeconds: 0, // Start timer at 0

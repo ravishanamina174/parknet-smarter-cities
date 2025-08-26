@@ -8,6 +8,7 @@ import { CheckCircle } from "lucide-react";
 interface ReservationState {
   centerId: string;
   centerName: string;
+  centerAddress: string;
   slotNumber: number;
   status: "free" | "reserved" | "occupied";
   timerSeconds?: number;
@@ -73,15 +74,15 @@ export default function Reservations() {
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border p-3">
               <div className="text-xs text-muted-foreground">Slot</div>
-              <div className="font-semibold">{state ? `#${state.slotNumber}` : "A-12"}</div>
+              <div className="font-semibold">{state ? `#${state.slotNumber}` : "No slot selected"}</div>
             </div>
             <div className="rounded-lg border p-3">
               <div className="text-xs text-muted-foreground">Location</div>
-              <div className="font-semibold">{state ? state.centerName : "Central Plaza Parking"}</div>
+              <div className="font-semibold">{state ? state.centerAddress : "No location selected"}</div>
             </div>
             <div className="rounded-lg border p-3">
               <div className="text-xs text-muted-foreground">Status</div>
-              <div className="font-semibold capitalize">{state ? state.status : "reserved"}</div>
+              <div className="font-semibold capitalize">{state ? state.status : "No status"}</div>
             </div>
           </div>
 
