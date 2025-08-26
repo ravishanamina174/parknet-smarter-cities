@@ -1,21 +1,15 @@
 import { useUser } from "@clerk/clerk-react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-interface ProtectedRouteProps {
+interface AdminRouteProps {
   children: React.ReactNode;
   redirectTo?: string;
-  requireAdmin?: boolean;
 }
 
-export default function ProtectedRoute({ 
-  children, 
-  redirectTo = "/dashboard",
-  requireAdmin = false 
-}: ProtectedRouteProps) {
+export default function AdminRoute({ children, redirectTo = "/dashboard" }: AdminRouteProps) {
   const { user, isLoaded } = useUser();
-  const location = useLocation();
 
   if (!isLoaded) {
     return (
@@ -52,12 +46,10 @@ export default function ProtectedRoute({
     );
   }
 
-  // Check if user has admin role for admin-only routes
-  if (requireAdmin) {
-    const userRole = user.publicMetadata?.role;
-    if (userRole !== "admin") {
-      return <Navigate to={redirectTo} replace />;
-    }
+  // Check if user has admin role
+  const userRole = user.publicMetadata?.role;
+  if (userRole !== "admin") {
+    return <Navigate to={redirectTo} replace />;
   }
 
   return <>{children}</>;

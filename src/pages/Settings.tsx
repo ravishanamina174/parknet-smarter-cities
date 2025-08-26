@@ -147,12 +147,12 @@ export default function Settings() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact-phone">Contact Phone</Label>
-              <Input id="contact-phone" defaultValue="+1 (555) 123-4567" />
+              <Input id="contact-phone" defaultValue="+94 77 123 4567" />
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="address">Address</Label>
-            <Textarea id="address" defaultValue="123 Smart City Ave, Tech District, CA 90210" />
+            <Textarea id="address" defaultValue="No. 25, Smart Street, Colombo 01" />
           </div>
         </CardContent>
       </Card>
@@ -248,7 +248,7 @@ export default function Settings() {
         </CardContent>
       </Card>
 
-      {/* System Settings */}
+      {/* System Settings
       <Card className="mt-6">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -288,7 +288,7 @@ export default function Settings() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       <div className="mt-10 rounded-lg border p-4">
         <div className="flex items-center gap-2 mb-2">

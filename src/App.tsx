@@ -7,6 +7,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { ClerkProvider } from "@clerk/clerk-react";
 import TopNav from "./components/layout/TopNav";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
+import PublicRoute from "./components/PublicRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -17,6 +19,7 @@ import Admin from "./pages/Admin";
 import SpotDetails from "./pages/SpotDetails";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import MyReservations from "./pages/MyReservations";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +40,23 @@ const App = () => (
           <BrowserRouter>
             <TopNav />
             <Routes>
+              {/* Public routes - accessible to everyone */}
               <Route path="/" element={<Index />} />
+              <Route path="/contact" element={<Contact />} />
+              
+              {/* Auth routes - redirect signed-in users to dashboard */}
+              <Route path="/login" element={
+                <PublicRoute redirectTo="/dashboard">
+                  <Login />
+                </PublicRoute>
+              } />
+              <Route path="/signup" element={
+                <PublicRoute redirectTo="/dashboard">
+                  <Signup />
+                </PublicRoute>
+              } />
+              
+              {/* Protected routes - require authentication */}
               <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -48,21 +67,26 @@ const App = () => (
                   <Reservations />
                 </ProtectedRoute>
               } />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/settings" element={
+              <Route path="/my-reservations" element={
                 <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin" element={
-                <ProtectedRoute>
-                  <Admin />
+                  <MyReservations />
                 </ProtectedRoute>
               } />
               <Route path="/spots/:id" element={<SpotDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              
+              {/* Admin-only routes */}
+              <Route path="/settings" element={
+                <AdminRoute>
+                  <Settings />
+                </AdminRoute>
+              } />
+              <Route path="/admin" element={
+                <AdminRoute>
+                  <Admin />
+                </AdminRoute>
+              } />
+              
+              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -26,7 +26,7 @@ export default function Dashboard() {
         <link rel="canonical" href="/dashboard" />
       </Helmet>
 
-      <h1 className="text-2xl font-bold">Hello, Driver! Let’s find a parking spot for you</h1>
+      <h1 className="text-2xl font-bold">Hello, Driver! Let's find a parking spot for you</h1>
 
       <div className="mt-6 flex items-center gap-2">
         <div className="relative flex-1">

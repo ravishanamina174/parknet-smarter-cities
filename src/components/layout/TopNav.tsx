@@ -6,19 +6,25 @@ import { cn } from "@/lib/utils";
 import { MapPin, CarFront, Menu, User, LogOut, Settings } from "lucide-react";
 import { useState } from "react";
 import { useUser, useClerk } from "@clerk/clerk-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { to: "/", label: "Home" },
   { to: "/dashboard", label: "Dashboard" },
-  { to: "/reservations", label: "My Reservations" },
-  { to: "/settings", label: "Settings" },
+  { to: "/my-reservations", label: "My Reservations" },
   { to: "/contact", label: "Contact" },
+];
+
+const adminNavItems = [
+  { to: "/settings", label: "Settings" },
+  { to: "/admin", label: "Admin" },
 ];
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
   const { user, isLoaded } = useUser();
   const { signOut } = useClerk();
+  const { isAdmin } = useAuth();
 
   const handleSignOut = () => {
     signOut(() => {
@@ -69,6 +75,20 @@ export function TopNav() {
               {n.label}
             </NavLink>
           ))}
+          {isAdmin && adminNavItems.map((n) => (
+            <NavLink
+              key={n.to}
+              to={n.to}
+              className={({ isActive }) =>
+                cn(
+                  "text-sm transition-colors hover:text-primary",
+                  isActive ? "text-primary" : "text-muted-foreground"
+                )
+              }
+            >
+              {n.label}
+            </NavLink>
+          ))}
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -93,13 +113,17 @@ export function TopNav() {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/settings" className="flex items-center gap-2">
-                    <Settings className="h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
+                {isAdmin && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/settings" className="flex items-center gap-2">
+                        <Settings className="h-4 w-4" />
+                        Settings
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2">
                   <LogOut className="h-4 w-4" />
@@ -124,6 +148,21 @@ export function TopNav() {
         <div className="md:hidden border-t">
           <div className="container py-3 flex flex-col gap-2">
             {navItems.map((n) => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  cn(
+                    "py-2",
+                    isActive ? "text-primary" : "text-foreground"
+                  )
+                }
+              >
+                {n.label}
+              </NavLink>
+            ))}
+            {isAdmin && adminNavItems.map((n) => (
               <NavLink
                 key={n.to}
                 to={n.to}
