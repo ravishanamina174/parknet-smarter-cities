@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Locate } from "lucide-react";
 import ParkingCard from "@/components/cards/ParkingCard";
+import LiveLocationMap from "@/components/LiveLocationMap";
 import { parkingCenters, type ParkingCenter } from "@/lib/parkingData";
 
 const sample: ParkingCenter[] = parkingCenters;
@@ -42,6 +43,8 @@ export default function Dashboard() {
           <Locate className="h-4 w-4" /> Near me
         </Button>
       </div>
+
+      <LiveLocationMap className="mt-8" />
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Spots Near You</h2>

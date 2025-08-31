@@ -8,6 +8,7 @@ A modern React application for smart parking management with real-time status up
 - 🎨 **Modern UI** - Built with Shadcn/ui components and Tailwind CSS
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 - 🚗 **Smart Parking** - Real-time parking spot management
+- 📍 **Live Location** - Real-time GPS tracking with Google Maps integration
 - 📊 **Dashboard** - User-friendly analytics and monitoring
 - 🔒 **Protected Routes** - Secure access to user-specific features
 
@@ -22,11 +23,23 @@ This application uses [Clerk](https://clerk.com/) for authentication with the fo
 
 ## Environment Setup
 
-Create a `.env` file in the root directory with your Clerk publishable key:
+Create a `.env` file in the root directory with your API keys:
 
 ```env
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 ```
+
+### Google Maps API Setup
+
+The live location feature requires a Google Maps API key. Follow these steps:
+
+1. **Get API Key**: Visit [Google Cloud Console](https://console.cloud.google.com/)
+2. **Enable Maps JavaScript API**: Search and enable the Maps JavaScript API
+3. **Create Credentials**: Generate an API key in the Credentials section
+4. **Add to .env**: Copy the key to your `.env` file
+
+For detailed setup instructions, see [GOOGLE_MAPS_SETUP.md](./GOOGLE_MAPS_SETUP.md)
 
 ## Getting Started
 
@@ -83,11 +96,13 @@ src/
 │   ├── layout/
 │   │   └── TopNav.tsx          # Navigation with auth
 │   ├── ui/                      # Shadcn/ui components
+│   ├── LiveLocationMap.tsx      # Google Maps live location component
 │   └── ProtectedRoute.tsx       # Auth protection component
 ├── pages/
 │   ├── Index.tsx               # Home page with auth buttons
 │   ├── Login.tsx               # Clerk SignIn component
 │   ├── Signup.tsx              # Clerk SignUp component
+│   ├── Dashboard.tsx           # Main dashboard with live location
 │   ├── Settings.tsx            # User settings with auth
 │   └── ...                     # Other pages
 └── App.tsx                     # Main app with ClerkProvider
