@@ -147,12 +147,12 @@ export default function Settings() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact-phone">Contact Phone</Label>
-              <Input id="contact-phone" defaultValue="+94 77 123 4567" />
+              <Input id="contact-phone" defaultValue="+94 77 573 7173" />
             </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="address">Address</Label>
-            <Textarea id="address" defaultValue="No. 25, Smart Street, Colombo 01" />
+            <Textarea id="address" defaultValue="No. 25, Main Street, Nugegoda" />
           </div>
         </CardContent>
       </Card>

@@ -269,7 +269,7 @@ const Index = () => {
                 </li>
                 <li>
                   <motion.a 
-                    href="#" 
+                    href="http://localhost:8080/dashboard" 
                     className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
                     whileHover={{ x: 5 }}
                   >
@@ -278,7 +278,7 @@ const Index = () => {
                 </li>
                 <li>
                   <motion.a 
-                    href="#" 
+                    href="http://localhost:8080/my-reservations" 
                     className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
                     whileHover={{ x: 5 }}
                   >
@@ -287,7 +287,7 @@ const Index = () => {
                 </li>
                 <li>
                   <motion.a 
-                    href="#" 
+                    href="http://localhost:8080/contact" 
                     className="text-gray-300 hover:text-white transition-colors duration-200 text-sm"
                     whileHover={{ x: 5 }}
                   >
@@ -321,14 +321,14 @@ const Index = () => {
                   whileHover={{ x: 5 }}
                 >
                   <Phone className="h-4 w-4 text-blue-400" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+94 70 227 5338</span>
                 </motion.div>
                 <motion.div 
                   className="flex items-center gap-3 text-gray-300 text-sm"
                   whileHover={{ x: 5 }}
                 >
                   <MapPin className="h-4 w-4 text-blue-400" />
-                  <span> No. 25, Smart Street, Colombo 01</span>
+                  <span>No. 25, Smart Street, Colombo 01</span>
                 </motion.div>
               </div>
             </div>

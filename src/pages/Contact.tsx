@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Clock, Building2, CheckCircle, Send } from "lucide-react";
+import { MapPin, Phone, Clock, Building2, CheckCircle, Send, AlertCircle } from "lucide-react";
+import { feedbackApi, CreateFeedbackRequest } from "@/lib/api";
+import { toast } from "sonner";
 
 interface FormData {
   name: string;
@@ -20,29 +22,60 @@ export default function Contact() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitted(true);
-    setIsSubmitting(false);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 3000);
+    try {
+      const feedbackData: CreateFeedbackRequest = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim()
+      };
+
+      const response = await feedbackApi.create(feedbackData);
+      
+      if (response.success) {
+        setIsSubmitted(true);
+        toast.success("Message sent successfully!", {
+          description: "Thank you for your feedback. We'll get back to you soon!"
+        });
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({ name: "", email: "", message: "" });
+        }, 3000);
+      } else {
+        throw new Error(response.message || 'Failed to send message');
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
+      setError(errorMessage);
+      toast.error("Failed to send message", {
+        description: errorMessage
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setIsSubmitted(false);
+    setError(null);
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
@@ -63,7 +96,7 @@ export default function Contact() {
           </div>
           <div className="grid gap-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground"><Building2 className="h-4 w-4" /> No. 25, Smart Street, Colombo 01</div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Phone className="h-4 w-4" /> +94 77 123 4567</div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Phone className="h-4 w-4" /> +94 70 227 5338</div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground"><Clock className="h-4 w-4" /> Open Hours: 6:00 AM - 11:00 PM</div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> Colombo 01</div>
           </div>
@@ -109,15 +142,37 @@ export default function Contact() {
             >
               Your message has been saved and our team will review it shortly.
             </motion.div>
+            <motion.div 
+              className="mt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Button onClick={resetForm} variant="outline" className="text-green-700 border-green-300 hover:bg-green-50">
+                Send Another Message
+              </Button>
+            </motion.div>
           </div>
         </motion.div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-6 max-w-xl space-y-4">
+          {error && (
+            <motion.div 
+              className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <AlertCircle className="h-4 w-4" />
+              <span className="text-sm">{error}</span>
+            </motion.div>
+          )}
+          
           <Input 
             placeholder="Your name" 
             value={formData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
             required
+            disabled={isSubmitting}
           />
           <Input 
             placeholder="Email address" 
@@ -125,6 +180,7 @@ export default function Contact() {
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
             required
+            disabled={isSubmitting}
           />
           <Textarea 
             placeholder="Message" 
@@ -132,6 +188,7 @@ export default function Contact() {
             value={formData.message}
             onChange={(e) => handleInputChange("message", e.target.value)}
             required
+            disabled={isSubmitting}
           />
           <Button 
             type="submit" 
