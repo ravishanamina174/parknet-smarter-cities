@@ -31,9 +31,12 @@ app.use(cors({
     'http://127.0.0.1:8080',
     'https://parknet-smarter-cities.vercel.app', // Vercel production
     'https://parknet-smarter-cities-git-main.vercel.app', // Vercel preview
-    /^https:\/\/parknet-smarter-cities.*\.vercel\.app$/ // All Vercel preview URLs
+    /^https:\/\/parknet-smarter-cities.*\.vercel\.app$/, // All Vercel preview URLs
+    /^https:\/\/.*\.vercel\.app$/ // Allow all Vercel domains
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(limiter); // Rate limiting
 app.use(morgan('combined')); // Logging
